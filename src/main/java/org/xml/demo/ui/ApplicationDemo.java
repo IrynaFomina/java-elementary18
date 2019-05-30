@@ -1,16 +1,19 @@
 package org.xml.demo.ui;
 
+
+import java.awt.BorderLayout;
+
 public class ApplicationDemo {
     public static void main(String[] args) {
-        Window window = Window
+        ApplicationWindow window = ApplicationWindow
                 .builder()
                 .windowHeight(700)
                 .windowWidth(700)
                 .windowTitle("Test")
-                .build();
-        window.init();
-
-        window.add(new GraphicArea());
-        window.setVisible(true);
+                .workingDirectory("D:\\gui")
+                .build();                
+        window.init();                     
+        
+        window.setVisible(true);        
     }
 }

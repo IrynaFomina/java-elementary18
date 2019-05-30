@@ -1,4 +1,4 @@
-package org.xml.demo.ui;
+package org.xml.demo.ui.figures;
 
 import java.awt.*;
 
