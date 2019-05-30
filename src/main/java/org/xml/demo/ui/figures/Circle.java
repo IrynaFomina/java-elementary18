@@ -10,10 +10,13 @@ public class Circle extends Figure {
     
     private int startX, startY, height, width;
 
-    public Circle(int startX, int startY, int currentX, int currentY) {        
-        this.startX = Integer.min(startX, currentX);
-        this.startY = Integer.min(startY, currentY);
-        this.height = this.width = (int) (Math.pow(startX - currentX, 2) + Math.pow(startY - currentY, 2));
+    public Circle(int startX, int startY, int currentX, int currentY) {
+        
+        int radius = (int) (Math.pow(startX - currentX, 2) + Math.pow(startY - currentY, 2));
+        
+        this.startX = startX - radius;
+        this.startY = startY - radius;
+        this.height = this.width = radius * 2;
     }
         
     @Override
@@ -23,7 +26,5 @@ public class Circle extends Figure {
         } else {
             g.drawOval(startX, startY, width, height);
         }
-    }
-    
-    
+    }        
 }
