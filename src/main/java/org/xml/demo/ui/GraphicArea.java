@@ -88,6 +88,8 @@ public class GraphicArea extends JComponent {
                 break;
             case DRAW_CIRCLE:
                 break;
+                default:
+                    System.out.println("Mode isn't defined");
         }
         f.setWindowState(state);
         if (f != null && decorator!=null && doDecorate) {
@@ -116,7 +118,7 @@ public class GraphicArea extends JComponent {
     }
 
     private void drawGrid(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
+//        Graphics2D g2 = (Graphics2D) g;
 
         for (int i =0 ; i<getHeight(); i+= gridStep) {
             g.drawLine(0, i, getWidth(), i);

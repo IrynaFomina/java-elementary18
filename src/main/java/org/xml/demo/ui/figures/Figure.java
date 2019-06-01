@@ -13,4 +13,8 @@ public abstract class  Figure {
     protected ApplicationWindowState windowState;
 
     public abstract void draw(Graphics g, boolean filled);
+
+    public void setWindowState(ApplicationWindowState windowState) {
+        this.windowState = windowState;
+    }
 }
