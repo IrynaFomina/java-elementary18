@@ -12,10 +12,12 @@ import java.awt.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.logging.Logger;
 
 @Builder
 @Getter
 public class Window extends JFrame implements IApplicationWindowStateManager {
+    private static Logger log= Logger.getLogger(Window.class.getName());
 
     private static ApplicationWindowState INITIAL_STATE = new ApplicationWindowState(
             ApplicationMode.DRAW_RECTANGLE,
@@ -49,19 +51,16 @@ public class Window extends JFrame implements IApplicationWindowStateManager {
         if (file.exists()) {
             try {
                 ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
+                log.info("State has been loaded from " + file.getName());
                 return (ApplicationWindowState) objectInputStream.readObject();
             } catch (FileNotFoundException e) {
                 System.out.println("File was not found");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
             }
         }
-        return new ApplicationWindowState(
-                ApplicationMode.DRAW_RECTANGLE,
-                Color.BLUE);
-
+        log.info("State has been initialised with default settings");
+        return new ApplicationWindowState(ApplicationMode.DRAW_RECTANGLE, Color.BLUE);
     }
 
     private void initWithButtons() {
@@ -81,21 +80,18 @@ public class Window extends JFrame implements IApplicationWindowStateManager {
 
     }
 
-    private ButtonGroup addModeButtonGroup(HashMap<String, ApplicationMode> map, JPanel parentPanel) {
+    private void addModeButtonGroup(HashMap<String, ApplicationMode> map, JPanel parentPanel) {
         ButtonGroup buttonGroup = new ButtonGroup();
-        map.entrySet().forEach(e -> {
-            JToggleButton button = (JToggleButton) createModeButton(e.getKey(), e.getValue());
+        map.forEach((key, value) -> {
+            JToggleButton button = (JToggleButton) createModeButton(key, value);
             parentPanel.add(button);
             buttonGroup.add(button);
         });
-        return buttonGroup;
     }
 
     private AbstractButton createModeButton(String label, ApplicationMode mode) {
         JToggleButton button = new JToggleButton(label);
-        button.addActionListener(e -> {
-            changeState(new ApplicationWindowState(mode, provideState().getColor()));
-        });
+        button.addActionListener(e -> changeState(new ApplicationWindowState(mode, provideState().getColor())));
         return button;
     }
 
